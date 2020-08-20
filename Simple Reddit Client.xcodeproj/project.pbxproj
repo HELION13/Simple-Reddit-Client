@@ -19,6 +19,9 @@
 		5543EB5924EED1C200BD420E /* TokenParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB5824EED1C200BD420E /* TokenParams.swift */; };
 		5543EB5B24EED20C00BD420E /* TokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB5A24EED20C00BD420E /* TokenResponse.swift */; };
 		5543EB5D24EED29700BD420E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB5C24EED29700BD420E /* NetworkService.swift */; };
+		5543EB6424EED5DC00BD420E /* ListingParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB6324EED5DC00BD420E /* ListingParams.swift */; };
+		5543EB6724EED65D00BD420E /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB6624EED65D00BD420E /* Listing.swift */; };
+		5543EB6924EED67900BD420E /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB6824EED67900BD420E /* Post.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +39,9 @@
 		5543EB5824EED1C200BD420E /* TokenParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenParams.swift; sourceTree = "<group>"; };
 		5543EB5A24EED20C00BD420E /* TokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenResponse.swift; sourceTree = "<group>"; };
 		5543EB5C24EED29700BD420E /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		5543EB6324EED5DC00BD420E /* ListingParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingParams.swift; sourceTree = "<group>"; };
+		5543EB6624EED65D00BD420E /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listing.swift; sourceTree = "<group>"; };
+		5543EB6824EED67900BD420E /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +74,7 @@
 		5543EB3424EEC97400BD420E /* Simple Reddit Client */ = {
 			isa = PBXGroup;
 			children = (
+				5543EB6524EED65000BD420E /* Model */,
 				5543EB4E24EED0CE00BD420E /* Services */,
 				5543EB4924EECA8B00BD420E /* Presentation */,
 				5543EB3524EEC97400BD420E /* AppDelegate.swift */,
@@ -121,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				5543EB5824EED1C200BD420E /* TokenParams.swift */,
+				5543EB6324EED5DC00BD420E /* ListingParams.swift */,
 			);
 			path = Params;
 			sourceTree = "<group>";
@@ -131,6 +139,15 @@
 				5543EB5A24EED20C00BD420E /* TokenResponse.swift */,
 			);
 			path = Responses;
+			sourceTree = "<group>";
+		};
+		5543EB6524EED65000BD420E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5543EB6624EED65D00BD420E /* Listing.swift */,
+				5543EB6824EED67900BD420E /* Post.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,6 +223,9 @@
 			files = (
 				5543EB3624EEC97400BD420E /* AppDelegate.swift in Sources */,
 				5543EB5324EED13D00BD420E /* Request.swift in Sources */,
+				5543EB6424EED5DC00BD420E /* ListingParams.swift in Sources */,
+				5543EB6924EED67900BD420E /* Post.swift in Sources */,
+				5543EB6724EED65D00BD420E /* Listing.swift in Sources */,
 				5543EB5924EED1C200BD420E /* TokenParams.swift in Sources */,
 				5543EB5124EED10800BD420E /* AuthorizationService.swift in Sources */,
 				5543EB5D24EED29700BD420E /* NetworkService.swift in Sources */,

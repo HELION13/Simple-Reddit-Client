@@ -14,6 +14,10 @@
 		5543EB4224EEC97600BD420E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5543EB4024EEC97600BD420E /* LaunchScreen.storyboard */; };
 		5543EB4B24EECAFE00BD420E /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB4A24EECAFE00BD420E /* FeedViewController.swift */; };
 		5543EB4D24EED08E00BD420E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB4C24EED08E00BD420E /* Constants.swift */; };
+		5543EB5124EED10800BD420E /* AuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB5024EED10800BD420E /* AuthorizationService.swift */; };
+		5543EB5324EED13D00BD420E /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB5224EED13D00BD420E /* Request.swift */; };
+		5543EB5924EED1C200BD420E /* TokenParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB5824EED1C200BD420E /* TokenParams.swift */; };
+		5543EB5B24EED20C00BD420E /* TokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB5A24EED20C00BD420E /* TokenResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +30,10 @@
 		5543EB4324EEC97600BD420E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5543EB4A24EECAFE00BD420E /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		5543EB4C24EED08E00BD420E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		5543EB5024EED10800BD420E /* AuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationService.swift; sourceTree = "<group>"; };
+		5543EB5224EED13D00BD420E /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		5543EB5824EED1C200BD420E /* TokenParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenParams.swift; sourceTree = "<group>"; };
+		5543EB5A24EED20C00BD420E /* TokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +66,7 @@
 		5543EB3424EEC97400BD420E /* Simple Reddit Client */ = {
 			isa = PBXGroup;
 			children = (
+				5543EB4E24EED0CE00BD420E /* Services */,
 				5543EB4924EECA8B00BD420E /* Presentation */,
 				5543EB3524EEC97400BD420E /* AppDelegate.swift */,
 				5543EB3724EEC97400BD420E /* SceneDelegate.swift */,
@@ -76,6 +85,49 @@
 				5543EB4A24EECAFE00BD420E /* FeedViewController.swift */,
 			);
 			path = Presentation;
+			sourceTree = "<group>";
+		};
+		5543EB4E24EED0CE00BD420E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				5543EB5424EED16100BD420E /* Network */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		5543EB5424EED16100BD420E /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				5543EB5024EED10800BD420E /* AuthorizationService.swift */,
+				5543EB5524EED18900BD420E /* Requests */,
+				5543EB5624EED19400BD420E /* Params */,
+				5543EB5724EED1A200BD420E /* Responses */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		5543EB5524EED18900BD420E /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				5543EB5224EED13D00BD420E /* Request.swift */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		5543EB5624EED19400BD420E /* Params */ = {
+			isa = PBXGroup;
+			children = (
+				5543EB5824EED1C200BD420E /* TokenParams.swift */,
+			);
+			path = Params;
+			sourceTree = "<group>";
+		};
+		5543EB5724EED1A200BD420E /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				5543EB5A24EED20C00BD420E /* TokenResponse.swift */,
+			);
+			path = Responses;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,8 +202,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				5543EB3624EEC97400BD420E /* AppDelegate.swift in Sources */,
+				5543EB5324EED13D00BD420E /* Request.swift in Sources */,
+				5543EB5924EED1C200BD420E /* TokenParams.swift in Sources */,
+				5543EB5124EED10800BD420E /* AuthorizationService.swift in Sources */,
 				5543EB4B24EECAFE00BD420E /* FeedViewController.swift in Sources */,
 				5543EB3824EEC97400BD420E /* SceneDelegate.swift in Sources */,
+				5543EB5B24EED20C00BD420E /* TokenResponse.swift in Sources */,
 				5543EB4D24EED08E00BD420E /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

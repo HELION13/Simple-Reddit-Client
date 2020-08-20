@@ -45,7 +45,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PostCell" id="kQN-bq-CM0">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PostCell" id="kQN-bq-CM0" customClass="PostTableViewCell" customModule="Simple_Reddit_Client" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="208"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kQN-bq-CM0" id="9f6-18-gIh">
@@ -106,6 +106,9 @@
                                                                         </imageView>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljV-25-Bsn">
                                                                             <rect key="frame" x="0.0" y="0.0" width="30" height="100"/>
+                                                                            <connections>
+                                                                                <action selector="thumbnailButtonPressed" destination="kQN-bq-CM0" eventType="touchUpInside" id="Fwd-S0-7JG"/>
+                                                                            </connections>
                                                                         </button>
                                                                         <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Sv3-fq-jl5">
                                                                             <rect key="frame" x="8" y="78" width="14" height="2"/>
@@ -179,6 +182,18 @@
                                             <constraint firstAttribute="trailing" secondItem="EJy-Kl-Lpi" secondAttribute="trailing" id="4tk-pc-QTF"/>
                                             <constraint firstItem="EJy-Kl-Lpi" firstAttribute="leading" secondItem="kQN-bq-CM0" secondAttribute="leading" id="OTG-NI-vBU"/>
                                         </constraints>
+                                        <connections>
+                                            <outlet property="commentCount" destination="OVl-3n-gt0" id="WKt-sf-2So"/>
+                                            <outlet property="downloadProgress" destination="Sv3-fq-jl5" id="uCu-82-aU1"/>
+                                            <outlet property="shareButton" destination="DH0-8I-Dea" id="ekh-hY-xh3"/>
+                                            <outlet property="subreddit" destination="Df8-RP-eX4" id="3u0-YL-lTe"/>
+                                            <outlet property="thumbButton" destination="ljV-25-Bsn" id="xd7-or-E9x"/>
+                                            <outlet property="thumbContainer" destination="OfA-CA-Taf" id="rQd-bn-vbZ"/>
+                                            <outlet property="thumbnail" destination="m1T-9J-FUZ" id="R17-HC-p8I"/>
+                                            <outlet property="time" destination="gEV-yV-Tb4" id="2s4-j8-alA"/>
+                                            <outlet property="title" destination="u5k-GP-bzS" id="1gG-Ae-gjc"/>
+                                            <outlet property="user" destination="hO4-7U-3kK" id="9Cw-xf-Vwv"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>
@@ -196,6 +211,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Opn-zc-ize"/>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="ay3-Ku-3nH" id="fYf-Fh-pws"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NMe-5F-mSc" sceneMemberID="firstResponder"/>
             </objects>
@@ -207,13 +225,13 @@
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <image name="text.bubble" catalog="system" width="128" height="110"/>
         <namedColor name="Alien Blue">
-            <color red="0.0" green="0.47450980392156861" blue="0.82745098039215681" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47499999403953552" blue="0.82700002193450928" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Blue">
-            <color red="0.14117647058823529" green="0.62745098039215685" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.14100000262260437" green="0.62699997425079346" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Mango">
-            <color red="1" green="0.69019607843137254" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.68999999761581421" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

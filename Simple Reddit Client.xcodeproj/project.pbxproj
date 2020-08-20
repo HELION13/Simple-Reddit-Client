@@ -22,6 +22,9 @@
 		5543EB6424EED5DC00BD420E /* ListingParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB6324EED5DC00BD420E /* ListingParams.swift */; };
 		5543EB6724EED65D00BD420E /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB6624EED65D00BD420E /* Listing.swift */; };
 		5543EB6924EED67900BD420E /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB6824EED67900BD420E /* Post.swift */; };
+		5543EB6B24EEDECA00BD420E /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB6A24EEDEC900BD420E /* PostViewModel.swift */; };
+		5543EB6D24EEDF7300BD420E /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB6C24EEDF7300BD420E /* FeedViewModel.swift */; };
+		5543EB7024EEDF9800BD420E /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB6F24EEDF9800BD420E /* PostTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +45,9 @@
 		5543EB6324EED5DC00BD420E /* ListingParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingParams.swift; sourceTree = "<group>"; };
 		5543EB6624EED65D00BD420E /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listing.swift; sourceTree = "<group>"; };
 		5543EB6824EED67900BD420E /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		5543EB6A24EEDEC900BD420E /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
+		5543EB6C24EEDF7300BD420E /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		5543EB6F24EEDF9800BD420E /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +96,9 @@
 		5543EB4924EECA8B00BD420E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				5543EB6E24EEDF7D00BD420E /* Cell */,
 				5543EB3B24EEC97400BD420E /* Main.storyboard */,
+				5543EB6C24EEDF7300BD420E /* FeedViewModel.swift */,
 				5543EB4A24EECAFE00BD420E /* FeedViewController.swift */,
 			);
 			path = Presentation;
@@ -148,6 +156,15 @@
 				5543EB6824EED67900BD420E /* Post.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		5543EB6E24EEDF7D00BD420E /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5543EB6A24EEDEC900BD420E /* PostViewModel.swift */,
+				5543EB6F24EEDF9800BD420E /* PostTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,6 +238,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5543EB6D24EEDF7300BD420E /* FeedViewModel.swift in Sources */,
+				5543EB6B24EEDECA00BD420E /* PostViewModel.swift in Sources */,
+				5543EB7024EEDF9800BD420E /* PostTableViewCell.swift in Sources */,
 				5543EB3624EEC97400BD420E /* AppDelegate.swift in Sources */,
 				5543EB5324EED13D00BD420E /* Request.swift in Sources */,
 				5543EB6424EED5DC00BD420E /* ListingParams.swift in Sources */,

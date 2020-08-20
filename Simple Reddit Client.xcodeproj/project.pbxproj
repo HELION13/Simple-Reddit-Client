@@ -9,21 +9,21 @@
 /* Begin PBXBuildFile section */
 		5543EB3624EEC97400BD420E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB3524EEC97400BD420E /* AppDelegate.swift */; };
 		5543EB3824EEC97400BD420E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB3724EEC97400BD420E /* SceneDelegate.swift */; };
-		5543EB3A24EEC97400BD420E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB3924EEC97400BD420E /* ViewController.swift */; };
 		5543EB3D24EEC97400BD420E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5543EB3B24EEC97400BD420E /* Main.storyboard */; };
 		5543EB3F24EEC97600BD420E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5543EB3E24EEC97600BD420E /* Assets.xcassets */; };
 		5543EB4224EEC97600BD420E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5543EB4024EEC97600BD420E /* LaunchScreen.storyboard */; };
+		5543EB4B24EECAFE00BD420E /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB4A24EECAFE00BD420E /* FeedViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5543EB3224EEC97400BD420E /* Simple Reddit Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Reddit Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5543EB3524EEC97400BD420E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5543EB3724EEC97400BD420E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		5543EB3924EEC97400BD420E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5543EB3C24EEC97400BD420E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5543EB3E24EEC97600BD420E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5543EB4124EEC97600BD420E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5543EB4324EEC97600BD420E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5543EB4A24EECAFE00BD420E /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +56,23 @@
 		5543EB3424EEC97400BD420E /* Simple Reddit Client */ = {
 			isa = PBXGroup;
 			children = (
+				5543EB4924EECA8B00BD420E /* Presentation */,
 				5543EB3524EEC97400BD420E /* AppDelegate.swift */,
 				5543EB3724EEC97400BD420E /* SceneDelegate.swift */,
-				5543EB3924EEC97400BD420E /* ViewController.swift */,
-				5543EB3B24EEC97400BD420E /* Main.storyboard */,
 				5543EB3E24EEC97600BD420E /* Assets.xcassets */,
 				5543EB4024EEC97600BD420E /* LaunchScreen.storyboard */,
 				5543EB4324EEC97600BD420E /* Info.plist */,
 			);
 			path = "Simple Reddit Client";
+			sourceTree = "<group>";
+		};
+		5543EB4924EECA8B00BD420E /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				5543EB3B24EEC97400BD420E /* Main.storyboard */,
+				5543EB4A24EECAFE00BD420E /* FeedViewController.swift */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,8 +146,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5543EB3A24EEC97400BD420E /* ViewController.swift in Sources */,
 				5543EB3624EEC97400BD420E /* AppDelegate.swift in Sources */,
+				5543EB4B24EECAFE00BD420E /* FeedViewController.swift in Sources */,
 				5543EB3824EEC97400BD420E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

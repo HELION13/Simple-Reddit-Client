@@ -47,7 +47,22 @@ extension Post: Decodable {
         author = try dataContainer.decode(String.self, forKey: .author)
         numComments = try dataContainer.decode(Int.self, forKey: .numComments)
         subredditNamePrefixed = try dataContainer.decode(String.self, forKey: .subredditNamePrefixed)
-        thumbnail = try dataContainer.decodeIfPresent(URL.self, forKey: .thumbnail)
+        
+        if let urlString = try dataContainer.decodeIfPresent(String.self, forKey: .thumbnail) {
+            switch urlString {
+            case "self":
+                thumbnail = Constants.selfThumbURL
+            case "default":
+                thumbnail = Constants.defaultThumbURL
+            case "nsfw":
+                thumbnail = Constants.nsfwThumbURL
+            default:
+                thumbnail = URL(string: urlString)
+            }
+        } else {
+            thumbnail = nil
+        }
+        
         url = try? dataContainer.decodeIfPresent(URL.self, forKey: .url)
         createdUtc = try dataContainer.decode(Date.self, forKey: .createdUtc)
     }

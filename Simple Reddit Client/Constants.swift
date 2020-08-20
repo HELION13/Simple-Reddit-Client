@@ -14,4 +14,7 @@ enum Constants {
     static let grantType = "https://oauth.reddit.com/grants/installed_client"
     static let authURL = URL(string: "https://www.reddit.com/api/v1")!
     static let baseURL = URL(string: "https://oauth.reddit.com")!
+    static let selfThumbURL = URL(string: "https://www.reddit.com/static/self_default2.png")!
+    static let defaultThumbURL = URL(string: "https://www.reddit.com/static/noimage.png")!
+    static let nsfwThumbURL = URL(string: "https://www.reddit.com/static/nsfw2.png")!
 }

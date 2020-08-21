@@ -10,6 +10,7 @@ import Foundation
 
 protocol NetworkService {
     func execute<Value: Decodable>(_ request: Request, completion: @escaping (Result<Value, NetworkServiceError>) -> Void)
+        func imageTask(for url: URL, completion: @escaping (Result<URL, NetworkServiceError>) -> Void) -> URLSessionDownloadTask
 }
 
 enum NetworkServiceError: Error {
@@ -87,5 +88,22 @@ class NetworkServiceImpl: NetworkService {
         }
         
         task.resume()
+    }
+    
+    func imageTask(for url: URL, completion: @escaping (Result<URL, NetworkServiceError>) -> Void) -> URLSessionDownloadTask {
+        let task = URLSession.shared.downloadTask(with: url) { (localURL, response, error) in
+            if let error = error { return completion(.failure(.other(error.localizedDescription))) }
+            guard let localURL = localURL, let response = response as? HTTPURLResponse else {
+                completion(.failure(.other("No response")))
+                return
+            }
+            guard (200..<300).contains(response.statusCode) else {
+                completion(.failure(.other("Status - \(response.statusCode)")))
+                return
+            }
+            
+            completion(.success(localURL))
+        }
+        return task
     }
 }

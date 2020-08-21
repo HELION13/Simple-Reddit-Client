@@ -28,6 +28,7 @@ class PostTableViewCell: UITableViewCell {
             time.text = viewModel.postDate
             commentCount.text = "\(viewModel.numComments)"
             thumbContainer.isHidden = viewModel.thumbnailTask == nil
+            shareButton.isHidden = !imageValid()
             
             if let localURL = viewModel.localThumbURL {
                 DispatchQueue.global(qos: .userInitiated).async {
@@ -61,9 +62,21 @@ class PostTableViewCell: UITableViewCell {
     }
     
     var thumbnailPressed: (() -> Void)?
+    var sharePressed: ((UIImage, URL) -> Void)?
+    
+    private func imageValid() -> Bool {
+        guard let originalURL = viewModel.originalImage, originalURL.pathExtension == "jpg" || originalURL.pathExtension == "png" else { return false }
+        return true
+    }
     
     @IBAction private func thumbnailButtonPressed() {
         thumbnailPressed?()
+    }
+    
+    @IBAction private func shareButtonPressed() {
+        guard let placeholder = thumbnail.image, let originalURL = viewModel.originalImage,
+            originalURL.pathExtension == "jpg" || originalURL.pathExtension == "png" else { return }
+        sharePressed?(placeholder, originalURL)
     }
     
     override func prepareForReuse() {

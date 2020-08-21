@@ -62,6 +62,13 @@ class FeedViewController: UIViewController {
             UIApplication.shared.open(imageURL, options: [:], completionHandler: nil)
         }
         
+        cell?.sharePressed = { [weak self] image, originalURL in
+            let imageProvider = RedditImageItemProvider(placeholderImage: image, image: originalURL)
+            
+            let acivityController = UIActivityViewController(activityItems: [imageProvider], applicationActivities: nil)
+            self?.present(acivityController, animated: true, completion: nil)
+        }
+        
         return cell
     }
     

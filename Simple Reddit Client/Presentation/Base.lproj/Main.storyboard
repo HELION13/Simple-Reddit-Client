@@ -154,6 +154,9 @@
                                                                     <rect key="frame" x="355" y="-0.5" width="19" height="21"/>
                                                                     <color key="tintColor" name="Alien Blue"/>
                                                                     <state key="normal" backgroundImage="square.and.arrow.up" catalog="system"/>
+                                                                    <connections>
+                                                                        <action selector="shareButtonPressed" destination="kQN-bq-CM0" eventType="touchUpInside" id="i0Q-Ds-Tdk"/>
+                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                             <constraints>

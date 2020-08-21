@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		553F1B4924EFD2030075D201 /* RedditImageItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553F1B4824EFD2030075D201 /* RedditImageItemProvider.swift */; };
 		5543EB3624EEC97400BD420E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB3524EEC97400BD420E /* AppDelegate.swift */; };
 		5543EB3824EEC97400BD420E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB3724EEC97400BD420E /* SceneDelegate.swift */; };
 		5543EB3D24EEC97400BD420E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5543EB3B24EEC97400BD420E /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		553F1B4824EFD2030075D201 /* RedditImageItemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditImageItemProvider.swift; sourceTree = "<group>"; };
 		5543EB3224EEC97400BD420E /* Simple Reddit Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Reddit Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5543EB3524EEC97400BD420E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5543EB3724EEC97400BD420E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				5543EB3524EEC97400BD420E /* AppDelegate.swift */,
 				5543EB3724EEC97400BD420E /* SceneDelegate.swift */,
 				5543EB4C24EED08E00BD420E /* Constants.swift */,
+				553F1B4824EFD2030075D201 /* RedditImageItemProvider.swift */,
 				5543EB3E24EEC97600BD420E /* Assets.xcassets */,
 				5543EB4024EEC97600BD420E /* LaunchScreen.storyboard */,
 				5543EB4324EEC97600BD420E /* Info.plist */,
@@ -239,6 +242,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5543EB6D24EEDF7300BD420E /* FeedViewModel.swift in Sources */,
+				553F1B4924EFD2030075D201 /* RedditImageItemProvider.swift in Sources */,
 				5543EB6B24EEDECA00BD420E /* PostViewModel.swift in Sources */,
 				5543EB7024EEDF9800BD420E /* PostTableViewCell.swift in Sources */,
 				5543EB3624EEC97400BD420E /* AppDelegate.swift in Sources */,

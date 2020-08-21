@@ -17,4 +17,10 @@ enum Constants {
     static let selfThumbURL = URL(string: "https://www.reddit.com/static/self_default2.png")!
     static let defaultThumbURL = URL(string: "https://www.reddit.com/static/noimage.png")!
     static let nsfwThumbURL = URL(string: "https://www.reddit.com/static/nsfw2.png")!
+    static let pageSize: Int = 25
+    
+    enum Keys {
+        static let tableOffset = "tableOffset"
+        static let lastItem = "lastItem"
+    }
 }

@@ -43,6 +43,7 @@ class PostTableViewCell: UITableViewCell {
                 downloadProgress.isHidden = false
                 downloadProgress.observedProgress = viewModel.thumbnailTask?.progress
                 viewModel.thumbnail = { [weak self] (url) in
+                    guard self?.viewModel.thumbnailTask?.state != URLSessionTask.State.canceling else { return }
                     guard let url = url, let imageData = try? Data(contentsOf: url) else {
                         DispatchQueue.main.async { [weak self] in
                             self?.thumbContainer.isHidden = true
@@ -81,7 +82,6 @@ class PostTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        viewModel.thumbnailTask?.cancel()
         downloadProgress.observedProgress = nil
         downloadProgress.isHidden = true
         thumbContainer.isHidden = true

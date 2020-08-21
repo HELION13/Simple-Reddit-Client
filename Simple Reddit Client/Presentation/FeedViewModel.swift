@@ -10,9 +10,10 @@ import Foundation
 
 protocol FeedViewModel {
     var postsUpdated: (([PostViewModel]) -> Void)? { get set }
-    func didLoad()
+    func didLoad(lastID: String?)
     func refresh()
     func loadPosts(at index: Int)
+    func restorationData() -> (elementCount: Int, lastID: String?)
 }
 
 class FeedViewModelImpl: FeedViewModel {
@@ -29,14 +30,32 @@ class FeedViewModelImpl: FeedViewModel {
         self.networkService = networkService
     }
     
-    func didLoad() {
-        refresh()
+    func restorationData() -> (elementCount: Int, lastID: String?) {
+        return (posts.count, lastItemIdentifier)
+    }
+    
+    func didLoad(lastID: String?) {
+        guard let lastID = lastID else {
+            refresh()
+            return
+        }
+        
+        lastItemIdentifier = lastID
+        restoreContent()
+    }
+    
+    private func restoreContent() {
+        guard !loading else { return }
+        
+        let request = Request.top(.init(after: nil, before: lastItemIdentifier, limit: Constants.pageSize * 2, count: nil))
+        loading = true
+        performRequest(request, reset: true)
     }
     
     func refresh() {
         guard !loading else { return }
         
-        let request = Request.top(.init(after: nil, before: nil, limit: 25, count: nil))
+        let request = Request.top(.init(after: nil, before: nil, limit: Constants.pageSize, count: nil))
         loading = true
         performRequest(request, reset: true)
     }
@@ -44,7 +63,7 @@ class FeedViewModelImpl: FeedViewModel {
     func loadPosts(at index: Int) {
         guard !loading, index >= posts.count - 5 else { return }
         
-        let request = Request.top(.init(after: lastItemIdentifier, before: nil, limit: 25, count: posts.count))
+        let request = Request.top(.init(after: lastItemIdentifier, before: nil, limit: Constants.pageSize, count: posts.count))
         loading = true
         performRequest(request, reset: false)
     }
@@ -55,7 +74,6 @@ class FeedViewModelImpl: FeedViewModel {
             switch result {
             case .success(let list):
                 self.lastItemIdentifier = list.children.last?.name
-                UserDefaults.standard.set(self.lastItemIdentifier, forKey: "lastItem")
                 if reset {
                     self.replaceItems(list)
                 } else {

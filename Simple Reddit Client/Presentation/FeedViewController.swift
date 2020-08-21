@@ -15,14 +15,34 @@ enum FeedSection {
 class FeedViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var viewModel: FeedViewModel! = DependencyContainer().resolve()
-    var dataSource: UITableViewDiffableDataSource<FeedSection, PostViewModel>!
+    private var dataSource: UITableViewDiffableDataSource<FeedSection, PostViewModel>!
+    private var tableOffset: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupRestoration()
         setupRefreshControll()
         setupDatasource()
-        viewModel.didLoad()
+        restoreStateIfNeeded()
+    }
+    
+    private func restoreStateIfNeeded() {
+        tableOffset = UserDefaults.standard.integer(forKey: Constants.Keys.tableOffset)
+        let lastItem = UserDefaults.standard.value(forKey: Constants.Keys.lastItem) as? String
+        
+        viewModel.didLoad(lastID: lastItem)
+    }
+    
+    private func setupRestoration() {
+        NotificationCenter.default.addObserver(self, selector: #selector(saveState), name: UIApplication.willResignActiveNotification, object: nil)
+    }
+    
+    @objc private func saveState() {
+        let itemsData = viewModel.restorationData()
+        let resultIndex = (tableView.indexPathsForVisibleRows?.last?.row ?? 0) % (Constants.pageSize * 2)
+        UserDefaults.standard.setValue(resultIndex, forKey: Constants.Keys.tableOffset)
+        UserDefaults.standard.setValue(itemsData.lastID, forKey: Constants.Keys.lastItem)
     }
     
     private func setupRefreshControll() {
@@ -46,6 +66,13 @@ class FeedViewController: UIViewController {
             snap.appendItems(viewModels)
             
             self.dataSource.apply(snap)
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self, let offset = self.tableOffset else { return }
+                
+                self.tableView.scrollToRow(at: IndexPath(row: offset, section: 0), at: .middle, animated: false)
+                self.tableOffset = nil
+            }
         }
         
         dataSource.defaultRowAnimation = .fade
@@ -74,6 +101,14 @@ class FeedViewController: UIViewController {
     
     @objc func refresh() {
         viewModel.refresh()
+    }
+    
+    override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+    }
+    
+    override func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
     }
 }
 

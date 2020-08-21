@@ -14,7 +14,7 @@ enum FeedSection {
 
 class FeedViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    var viewModel: FeedViewModel! = FeedViewModelImpl(networkService: NetworkServiceImpl(authorizationService: AuthorizationServiceImpl()))
+    var viewModel: FeedViewModel! = DependencyContainer().resolve()
     var dataSource: UITableViewDiffableDataSource<FeedSection, PostViewModel>!
 
     override func viewDidLoad() {

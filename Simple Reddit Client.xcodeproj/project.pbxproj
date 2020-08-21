@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		553F1B4924EFD2030075D201 /* RedditImageItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553F1B4824EFD2030075D201 /* RedditImageItemProvider.swift */; };
+		553F1B4B24EFDA260075D201 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553F1B4A24EFDA260075D201 /* DependencyContainer.swift */; };
 		5543EB3624EEC97400BD420E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB3524EEC97400BD420E /* AppDelegate.swift */; };
 		5543EB3824EEC97400BD420E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5543EB3724EEC97400BD420E /* SceneDelegate.swift */; };
 		5543EB3D24EEC97400BD420E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5543EB3B24EEC97400BD420E /* Main.storyboard */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		553F1B4824EFD2030075D201 /* RedditImageItemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditImageItemProvider.swift; sourceTree = "<group>"; };
+		553F1B4A24EFDA260075D201 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		5543EB3224EEC97400BD420E /* Simple Reddit Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Reddit Client.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5543EB3524EEC97400BD420E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5543EB3724EEC97400BD420E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				5543EB4924EECA8B00BD420E /* Presentation */,
 				5543EB3524EEC97400BD420E /* AppDelegate.swift */,
 				5543EB3724EEC97400BD420E /* SceneDelegate.swift */,
+				553F1B4A24EFDA260075D201 /* DependencyContainer.swift */,
 				5543EB4C24EED08E00BD420E /* Constants.swift */,
 				553F1B4824EFD2030075D201 /* RedditImageItemProvider.swift */,
 				5543EB3E24EEC97600BD420E /* Assets.xcassets */,
@@ -254,6 +257,7 @@
 				5543EB5124EED10800BD420E /* AuthorizationService.swift in Sources */,
 				5543EB5D24EED29700BD420E /* NetworkService.swift in Sources */,
 				5543EB4B24EECAFE00BD420E /* FeedViewController.swift in Sources */,
+				553F1B4B24EFDA260075D201 /* DependencyContainer.swift in Sources */,
 				5543EB3824EEC97400BD420E /* SceneDelegate.swift in Sources */,
 				5543EB5B24EED20C00BD420E /* TokenResponse.swift in Sources */,
 				5543EB4D24EED08E00BD420E /* Constants.swift in Sources */,

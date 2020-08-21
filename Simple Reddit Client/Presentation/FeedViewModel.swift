@@ -79,7 +79,8 @@ class FeedViewModelImpl: FeedViewModel {
         let currentDate = Date()
         self.posts = list.children
         let vms = list.children.map { PostViewModel(model: $0,
-                                                    dateString: self.timeStringFrom(currentDate: currentDate, to: $0.createdUtc)) }
+                                                    dateString: self.timeStringFrom(currentDate: currentDate, to: $0.createdUtc),
+                                                    networkService: networkService) }
         self.postVms = vms
     }
     
@@ -87,7 +88,8 @@ class FeedViewModelImpl: FeedViewModel {
         let currentDate = Date()
         self.posts.append(contentsOf: list.children)
         let vms = list.children.map { PostViewModel(model: $0,
-                                                    dateString: self.timeStringFrom(currentDate: currentDate, to: $0.createdUtc)) }
+                                                    dateString: self.timeStringFrom(currentDate: currentDate, to: $0.createdUtc),
+                                                    networkService: networkService) }
         self.postVms.append(contentsOf: vms)
     }
     

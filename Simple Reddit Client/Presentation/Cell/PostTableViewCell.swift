@@ -27,7 +27,36 @@ class PostTableViewCell: UITableViewCell {
             user.text = "u/\(viewModel.author)"
             time.text = viewModel.postDate
             commentCount.text = "\(viewModel.numComments)"
-            thumbContainer.isHidden = viewModel.thumbnail == nil
+            thumbContainer.isHidden = viewModel.thumbnailTask == nil
+            
+            if let localURL = viewModel.localThumbURL {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    guard let imageData = try? Data(contentsOf: localURL) else { return }
+                    let image = UIImage(data: imageData)
+                    
+                    DispatchQueue.main.async { [weak self] in
+                        self?.thumbnail.image = image
+                    }
+                }
+            } else {
+                downloadProgress.isHidden = false
+                downloadProgress.observedProgress = viewModel.thumbnailTask?.progress
+                viewModel.thumbnail = { [weak self] (url) in
+                    guard let url = url, let imageData = try? Data(contentsOf: url) else {
+                        DispatchQueue.main.async { [weak self] in
+                            self?.thumbContainer.isHidden = true
+                        }
+                        return
+                    }
+                    
+                    let image = UIImage(data: imageData)
+                    DispatchQueue.main.async { [weak self] in
+                        self?.downloadProgress.isHidden = true
+                        self?.thumbnail.image = image
+                    }
+                }
+                viewModel.thumbnailTask?.resume()
+            }
         }
     }
     
@@ -39,6 +68,7 @@ class PostTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        viewModel.thumbnailTask?.cancel()
         downloadProgress.observedProgress = nil
         downloadProgress.isHidden = true
         thumbContainer.isHidden = true

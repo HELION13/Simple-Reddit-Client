@@ -15,18 +15,33 @@ class PostViewModel {
     let numComments: Int
     let subredditNamePrefixed: String
     let postDate: String
-    let thumbnail: URL?
+    var thumbnail: ((URL?) -> Void)?
+    private(set) var localThumbURL: URL?
+    private(set) var thumbnailTask: URLSessionDownloadTask?
     let originalImage: URL?
     
-    init(model: Post, dateString: String) {
+    init(model: Post, dateString: String, networkService: NetworkService) {
         id = model.id
         title = model.title
         author = model.author
         numComments = model.numComments
         subredditNamePrefixed = model.subredditNamePrefixed
         postDate = dateString
-        thumbnail = model.thumbnail
         originalImage = model.url
+        thumbnailTask = nil
+        
+        if let thumbnailURL = model.thumbnail {
+            thumbnailTask = networkService.imageTask(for: thumbnailURL, completion: { [weak self] (result: Result<URL, NetworkServiceError>) in
+                switch result {
+                case .success(let url):
+                    self?.localThumbURL = url
+                    self?.thumbnail?(url)
+                case .failure(_):
+                    print(thumbnailURL)
+                    self?.thumbnail?(nil)
+                }
+            })
+        }
     }
 }
 

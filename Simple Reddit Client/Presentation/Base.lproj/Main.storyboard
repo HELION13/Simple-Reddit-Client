@@ -46,14 +46,14 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PostCell" id="kQN-bq-CM0" customClass="PostTableViewCell" customModule="Simple_Reddit_Client" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="208"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="286"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kQN-bq-CM0" id="9f6-18-gIh">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="208"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="286"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="uSx-zn-gvB">
-                                                    <rect key="frame" x="20" y="8" width="374" height="172"/>
+                                                    <rect key="frame" x="20" y="8" width="374" height="250"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="r/subreddit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Df8-RP-eX4">
                                                             <rect key="frame" x="0.0" y="0.0" width="374" height="21"/>
@@ -91,7 +91,7 @@
                                                             </constraints>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Ztr-zg-vTg">
-                                                            <rect key="frame" x="0.0" y="48" width="374" height="100"/>
+                                                            <rect key="frame" x="0.0" y="48" width="374" height="178"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Postal union officials: 10 mail-sorting machines removed in Michigan" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u5k-GP-bzS">
                                                                     <rect key="frame" x="0.0" y="0.0" width="327.5" height="41"/>
@@ -99,35 +99,36 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OfA-CA-Taf">
-                                                                    <rect key="frame" x="330.5" y="0.0" width="43.5" height="100"/>
+                                                                    <rect key="frame" x="330.5" y="0.0" width="43.5" height="178"/>
                                                                     <subviews>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="m1T-9J-FUZ">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="30" height="100"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="100" height="178"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="100" id="u3i-KR-fXS"/>
+                                                                            </constraints>
                                                                         </imageView>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljV-25-Bsn">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="30" height="100"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="100" height="178"/>
                                                                             <connections>
                                                                                 <action selector="thumbnailButtonPressed" destination="kQN-bq-CM0" eventType="touchUpInside" id="Fwd-S0-7JG"/>
                                                                             </connections>
                                                                         </button>
                                                                         <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Sv3-fq-jl5">
-                                                                            <rect key="frame" x="8" y="78" width="14" height="2"/>
+                                                                            <rect key="frame" x="0.0" y="156" width="100" height="2"/>
                                                                             <color key="tintColor" name="Blue"/>
                                                                         </progressView>
                                                                     </subviews>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                     <constraints>
+                                                                        <constraint firstItem="Sv3-fq-jl5" firstAttribute="leading" secondItem="m1T-9J-FUZ" secondAttribute="leading" id="23i-cy-bIY"/>
                                                                         <constraint firstAttribute="trailing" secondItem="m1T-9J-FUZ" secondAttribute="trailing" id="690-3h-3gf"/>
+                                                                        <constraint firstItem="Sv3-fq-jl5" firstAttribute="trailing" secondItem="m1T-9J-FUZ" secondAttribute="trailing" id="9pH-lO-fZG"/>
                                                                         <constraint firstItem="ljV-25-Bsn" firstAttribute="trailing" secondItem="m1T-9J-FUZ" secondAttribute="trailing" id="C9Y-rB-n0F"/>
-                                                                        <constraint firstItem="Sv3-fq-jl5" firstAttribute="leading" secondItem="m1T-9J-FUZ" secondAttribute="leading" constant="8" id="CzM-me-4v7"/>
-                                                                        <constraint firstAttribute="width" constant="100" id="GXj-m1-qym"/>
                                                                         <constraint firstItem="m1T-9J-FUZ" firstAttribute="bottom" secondItem="Sv3-fq-jl5" secondAttribute="bottom" constant="20" id="HVb-ZI-yQq"/>
-                                                                        <constraint firstAttribute="height" constant="100" id="Rjf-uO-iTP"/>
                                                                         <constraint firstItem="ljV-25-Bsn" firstAttribute="top" secondItem="m1T-9J-FUZ" secondAttribute="top" id="a4d-Yf-VhO"/>
                                                                         <constraint firstAttribute="bottom" secondItem="m1T-9J-FUZ" secondAttribute="bottom" id="bDl-R1-aQI"/>
                                                                         <constraint firstItem="ljV-25-Bsn" firstAttribute="leading" secondItem="m1T-9J-FUZ" secondAttribute="leading" id="j4G-1Y-Eop"/>
                                                                         <constraint firstItem="m1T-9J-FUZ" firstAttribute="top" secondItem="OfA-CA-Taf" secondAttribute="top" id="rbZ-ob-vZ6"/>
-                                                                        <constraint firstItem="m1T-9J-FUZ" firstAttribute="trailing" secondItem="Sv3-fq-jl5" secondAttribute="trailing" constant="8" id="tQj-Iu-TXv"/>
                                                                         <constraint firstItem="m1T-9J-FUZ" firstAttribute="leading" secondItem="OfA-CA-Taf" secondAttribute="leading" id="uN7-tE-X1B"/>
                                                                         <constraint firstItem="ljV-25-Bsn" firstAttribute="bottom" secondItem="m1T-9J-FUZ" secondAttribute="bottom" id="zn8-QY-PRj"/>
                                                                     </constraints>
@@ -135,7 +136,7 @@
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="gZf-pr-0ZF">
-                                                            <rect key="frame" x="0.0" y="151" width="374" height="21"/>
+                                                            <rect key="frame" x="0.0" y="229" width="374" height="21"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text.bubble" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="2oG-qA-qbh">
                                                                     <rect key="frame" x="0.0" y="0.5" width="21" height="20.5"/>
@@ -167,7 +168,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EJy-Kl-Lpi">
-                                                    <rect key="frame" x="0.0" y="188" width="414" height="20"/>
+                                                    <rect key="frame" x="0.0" y="266" width="414" height="20"/>
                                                     <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="zC3-he-8OZ"/>

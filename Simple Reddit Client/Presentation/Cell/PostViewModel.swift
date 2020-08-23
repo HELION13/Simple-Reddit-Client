@@ -16,6 +16,7 @@ class PostViewModel {
     let subredditNamePrefixed: String
     let postDate: String
     var thumbnail: ((URL?) -> Void)?
+    let thumbnailAspect: Double?
     private(set) var localThumbURL: URL?
     private(set) var thumbnailTask: URLSessionDownloadTask?
     let originalImage: URL?
@@ -29,6 +30,12 @@ class PostViewModel {
         postDate = dateString
         originalImage = model.url
         thumbnailTask = nil
+        
+        if let width = model.thumbnailWidth, let height = model.thumbnailHeight {
+            thumbnailAspect = Double(width) / Double(height)
+        } else {
+            thumbnailAspect = nil
+        }
         
         if let thumbnailURL = model.thumbnail {
             thumbnailTask = networkService.imageTask(for: thumbnailURL, completion: { [weak self] (result: Result<URL, NetworkServiceError>) in

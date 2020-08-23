@@ -15,6 +15,16 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet private weak var time: UILabel!
     @IBOutlet private weak var thumbContainer: UIView!
     @IBOutlet private weak var thumbnail: UIImageView!
+    private weak var thumbnailAspect: NSLayoutConstraint? {
+        didSet {
+            if let oldValue = oldValue {
+                thumbnail.removeConstraint(oldValue)
+            }
+            if let thumbnailAspect = thumbnailAspect {
+                thumbnail.addConstraint(thumbnailAspect)
+            }
+        }
+    }
     @IBOutlet private weak var downloadProgress: UIProgressView!
     @IBOutlet private weak var commentCount: UILabel!
     @IBOutlet private weak var thumbButton: UIButton!
@@ -27,8 +37,15 @@ class PostTableViewCell: UITableViewCell {
             user.text = "u/\(viewModel.author)"
             time.text = viewModel.postDate
             commentCount.text = "\(viewModel.numComments)"
-            thumbContainer.isHidden = viewModel.thumbnailTask == nil
+            thumbContainer.isHidden = viewModel.thumbnailAspect == nil
             shareButton.isHidden = !imageValid()
+            
+            if let ratio = viewModel.thumbnailAspect {
+                let constraint = thumbnail.widthAnchor.constraint(equalTo: thumbnail.heightAnchor, multiplier: CGFloat(ratio))
+                constraint.priority = .defaultHigh
+
+                thumbnailAspect = constraint
+            }
             
             if let localURL = viewModel.localThumbURL {
                 DispatchQueue.global(qos: .userInitiated).async {

@@ -21,6 +21,8 @@ struct Post {
         case numComments
         case subredditNamePrefixed
         case thumbnail
+        case thumbnailWidth
+        case thumbnailHeight
         case url
         case createdUtc
     }
@@ -32,6 +34,8 @@ struct Post {
     let numComments: Int
     let subredditNamePrefixed: String
     let thumbnail: URL?
+    let thumbnailWidth: Int?
+    let thumbnailHeight: Int?
     let url: URL?
     let createdUtc: Date
 }
@@ -65,6 +69,8 @@ extension Post: Decodable {
             thumbnail = nil
         }
         
+        thumbnailWidth = try dataContainer.decodeIfPresent(Int.self, forKey: .thumbnailWidth)
+        thumbnailHeight = try dataContainer.decodeIfPresent(Int.self, forKey: .thumbnailHeight)
         url = try? dataContainer.decodeIfPresent(URL.self, forKey: .url)
         createdUtc = try dataContainer.decode(Date.self, forKey: .createdUtc)
     }

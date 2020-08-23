@@ -79,7 +79,7 @@ class FeedViewModelImpl: FeedViewModel {
         
         let request = Request.top(.init(after: lastItemIdentifier, before: nil, limit: Constants.pageSize, count: posts.count))
         loading = true
-        stateUpdated?(.init(posts: postVms, loading: true, errorMessage: nil))
+        stateUpdated?(.init(posts: postVms, loading: false, errorMessage: nil))
         performRequest(request, reset: false)
     }
     

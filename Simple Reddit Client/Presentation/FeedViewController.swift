@@ -60,7 +60,10 @@ class FeedViewController: UIViewController {
         viewModel.stateUpdated = { [weak self] (state) in
             guard let self = self else { return }
             
-            state.loading ? self.tableView.refreshControl?.beginRefreshing() : self.tableView.refreshControl?.endRefreshing()
+            if state.loading != self.tableView.refreshControl?.isRefreshing ?? false {
+                state.loading ? self.tableView.refreshControl?.beginRefreshing() : self.tableView.refreshControl?.endRefreshing()
+            }
+            
             self.lastItemID = state.posts.last?.id
             
             var snap = NSDiffableDataSourceSnapshot<FeedSection, PostViewModel>()
@@ -69,8 +72,10 @@ class FeedViewController: UIViewController {
             
             self.dataSource.apply(snap)
             
+            guard let offset = self.tableOffset, offset < state.posts.count else { return }
+            
             DispatchQueue.main.async { [weak self] in
-                guard let self = self, let offset = self.tableOffset, offset < state.posts.count else { return }
+                guard let self = self else { return }
                 
                 self.tableView.scrollToRow(at: IndexPath(row: offset, section: 0), at: .bottom, animated: false)
                 self.tableOffset = nil

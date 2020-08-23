@@ -9,11 +9,20 @@
 import Foundation
 
 protocol FeedViewModel {
-    var postsUpdated: (([PostViewModel]) -> Void)? { get set }
-    func didLoad(lastID: String?)
-    func refresh()
-    func loadPosts(at index: Int)
-    func restorationData() -> (elementCount: Int, lastID: String?)
+    var stateUpdated: ((FeedState) -> Void)? { get set }
+    func handle(action: FeedAction)
+}
+
+struct FeedState {
+    let posts: [PostViewModel]
+    let loading: Bool
+    let errorMessage: String?
+}
+
+enum FeedAction {
+    case resotorePostsBefore(String?)
+    case refresh
+    case loadPostsAfter(Int)
 }
 
 class FeedViewModelImpl: FeedViewModel {
@@ -24,24 +33,27 @@ class FeedViewModelImpl: FeedViewModel {
     private var loading = false
     private let calendar = Calendar.autoupdatingCurrent
     
-    var postsUpdated: (([PostViewModel]) -> Void)?
+    var stateUpdated: ((FeedState) -> Void)?
     
     init(networkService: NetworkService) {
         self.networkService = networkService
     }
     
-    func restorationData() -> (elementCount: Int, lastID: String?) {
-        return (posts.count, lastItemIdentifier)
-    }
-    
-    func didLoad(lastID: String?) {
-        guard let lastID = lastID else {
+    func handle(action: FeedAction) {
+        switch action {
+        case .resotorePostsBefore(let lastItemID):
+            guard let lastID = lastItemID else {
+                refresh()
+                return
+            }
+            
+            lastItemIdentifier = lastID
+            restoreContent()
+        case .refresh:
             refresh()
-            return
+        case .loadPostsAfter(let lastIndex):
+            loadPosts(after: lastIndex)
         }
-        
-        lastItemIdentifier = lastID
-        restoreContent()
     }
     
     private func restoreContent() {
@@ -49,22 +61,25 @@ class FeedViewModelImpl: FeedViewModel {
         
         let request = Request.top(.init(after: nil, before: lastItemIdentifier, limit: Constants.pageSize * 2, count: nil))
         loading = true
+        stateUpdated?(.init(posts: postVms, loading: true, errorMessage: nil))
         performRequest(request, reset: true)
     }
     
-    func refresh() {
+    private func refresh() {
         guard !loading else { return }
         
         let request = Request.top(.init(after: nil, before: nil, limit: Constants.pageSize, count: nil))
         loading = true
+        stateUpdated?(.init(posts: postVms, loading: true, errorMessage: nil))
         performRequest(request, reset: true)
     }
     
-    func loadPosts(at index: Int) {
+    private func loadPosts(after index: Int) {
         guard !loading, index >= posts.count - 5 else { return }
         
         let request = Request.top(.init(after: lastItemIdentifier, before: nil, limit: Constants.pageSize, count: posts.count))
         loading = true
+        stateUpdated?(.init(posts: postVms, loading: true, errorMessage: nil))
         performRequest(request, reset: false)
     }
     
@@ -81,14 +96,20 @@ class FeedViewModelImpl: FeedViewModel {
                 }
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-                    self.postsUpdated?(self.postVms)
+                    self.stateUpdated?(.init(posts: self.postVms,
+                                             loading: false,
+                                             errorMessage: nil))
+                    self.loading = false
                 }
             case .failure(let error):
-                debugPrint(error.localizedDescription)
-            }
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.loading = false
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    
+                    self.stateUpdated?(.init(posts: self.postVms,
+                                             loading: false,
+                                             errorMessage: error.localizedDescription))
+                    self.loading = false
+                }
             }
         }
     }

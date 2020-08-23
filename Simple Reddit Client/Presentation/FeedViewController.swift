@@ -17,6 +17,7 @@ class FeedViewController: UIViewController {
     var viewModel: FeedViewModel! = DependencyContainer().resolve()
     private var dataSource: UITableViewDiffableDataSource<FeedSection, PostViewModel>!
     private var tableOffset: Int?
+    private var lastItemID: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +32,7 @@ class FeedViewController: UIViewController {
         tableOffset = UserDefaults.standard.integer(forKey: Constants.Keys.tableOffset)
         let lastItem = UserDefaults.standard.value(forKey: Constants.Keys.lastItem) as? String
         
-        viewModel.didLoad(lastID: lastItem)
+        viewModel.handle(action: .resotorePostsBefore(lastItem))
     }
     
     private func setupRestoration() {
@@ -39,10 +40,9 @@ class FeedViewController: UIViewController {
     }
     
     @objc private func saveState() {
-        let itemsData = viewModel.restorationData()
-        let resultIndex = (tableView.indexPathsForVisibleRows?.last?.row ?? 0) % (Constants.pageSize * 2)
+        let resultIndex = (tableView.indexPathsForVisibleRows?.max()?.row ?? 0) % (Constants.pageSize * 2)
         UserDefaults.standard.setValue(resultIndex, forKey: Constants.Keys.tableOffset)
-        UserDefaults.standard.setValue(itemsData.lastID, forKey: Constants.Keys.lastItem)
+        UserDefaults.standard.setValue(lastItemID, forKey: Constants.Keys.lastItem)
     }
     
     private func setupRefreshControll() {
@@ -50,7 +50,6 @@ class FeedViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         refreshControl.tintColor = #colorLiteral(red: 0.1411764706, green: 0.6274509804, blue: 0.9294117647, alpha: 1)
         tableView.refreshControl = refreshControl
-        refreshControl.beginRefreshing()
     }
     
     private func setupDatasource() {
@@ -58,19 +57,22 @@ class FeedViewController: UIViewController {
             return self?.setupCell(for: ip, with: viewModel)
         }
         
-        viewModel.postsUpdated = { [weak self] (viewModels) in
+        viewModel.stateUpdated = { [weak self] (state) in
             guard let self = self else { return }
-            self.tableView.refreshControl?.endRefreshing()
+            
+            state.loading ? self.tableView.refreshControl?.beginRefreshing() : self.tableView.refreshControl?.endRefreshing()
+            self.lastItemID = state.posts.last?.id
+            
             var snap = NSDiffableDataSourceSnapshot<FeedSection, PostViewModel>()
             snap.appendSections([.all])
-            snap.appendItems(viewModels)
+            snap.appendItems(state.posts)
             
             self.dataSource.apply(snap)
             
             DispatchQueue.main.async { [weak self] in
-                guard let self = self, let offset = self.tableOffset else { return }
+                guard let self = self, let offset = self.tableOffset, offset < state.posts.count else { return }
                 
-                self.tableView.scrollToRow(at: IndexPath(row: offset, section: 0), at: .middle, animated: false)
+                self.tableView.scrollToRow(at: IndexPath(row: offset, section: 0), at: .bottom, animated: false)
                 self.tableOffset = nil
             }
         }
@@ -100,7 +102,7 @@ class FeedViewController: UIViewController {
     }
     
     @objc func refresh() {
-        viewModel.refresh()
+        viewModel.handle(action: .refresh)
     }
     
     override func encodeRestorableState(with coder: NSCoder) {
@@ -116,6 +118,6 @@ class FeedViewController: UIViewController {
 extension FeedViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         let max = indexPaths.map { $0.row }.max() ?? 0
-        viewModel.loadPosts(at: max)
+        viewModel.handle(action: .loadPostsAfter(max))
     }
 }

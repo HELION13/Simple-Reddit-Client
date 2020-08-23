@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import class UIKit.UIImage
 
 class PostViewModel {
     let id: String
@@ -15,11 +16,12 @@ class PostViewModel {
     let numComments: Int
     let subredditNamePrefixed: String
     let postDate: String
-    var thumbnail: ((URL?) -> Void)?
     let thumbnailAspect: Double?
-    private(set) var localThumbURL: URL?
-    private(set) var thumbnailTask: URLSessionDownloadTask?
-    let originalImage: URL?
+    let originalContent: URL?
+    private var thumbTaskHandle: TaskHandle?
+    private let thumbURL: URL?
+    private var localThumbURL: URL?
+    private let networkService: NetworkService
     
     init(model: Post, dateString: String, networkService: NetworkService) {
         id = model.id
@@ -28,8 +30,8 @@ class PostViewModel {
         numComments = model.numComments
         subredditNamePrefixed = model.subredditNamePrefixed
         postDate = dateString
-        originalImage = model.url
-        thumbnailTask = nil
+        originalContent = model.url
+        thumbURL = model.thumbnail
         
         if let width = model.thumbnailWidth, let height = model.thumbnailHeight {
             thumbnailAspect = Double(width) / Double(height)
@@ -37,18 +39,44 @@ class PostViewModel {
             thumbnailAspect = nil
         }
         
-        if let thumbnailURL = model.thumbnail {
-            thumbnailTask = networkService.imageTask(for: thumbnailURL, completion: { [weak self] (result: Result<URL, NetworkServiceError>) in
-                switch result {
-                case .success(let url):
-                    self?.localThumbURL = url
-                    self?.thumbnail?(url)
-                case .failure(_):
-                    print(thumbnailURL)
-                    self?.thumbnail?(nil)
-                }
-            })
+        self.networkService = networkService
+    }
+    
+    func thumbnailTask(completion: @escaping ((UIImage?) -> Void)) -> TaskHandle? {
+        guard let thumbnailURL = thumbURL else {
+            completion(nil)
+            return nil
         }
+        
+        if let localURL = localThumbURL {
+            DispatchQueue.global(qos: .userInitiated).async {
+                guard let imageData = try? Data(contentsOf: localURL), let image = UIImage(data: imageData) else {
+                    DispatchQueue.main.async { completion(nil) }
+                    return
+                }
+                
+                DispatchQueue.main.async { completion(image) }
+            }
+            
+            return nil
+        }
+        
+        thumbTaskHandle = networkService.imageTask(for: thumbnailURL, completion: { [weak self] (result: Result<URL, NetworkServiceError>) in
+            guard let self = self else { return }
+            switch result {
+            case .success(let url):
+                self.localThumbURL = url
+                guard let imageData = try? Data(contentsOf: url), let image = UIImage(data: imageData) else {
+                    DispatchQueue.main.async { completion(nil) }
+                    return
+                }
+                DispatchQueue.main.async { completion(image) }
+            case .failure(_):
+                DispatchQueue.main.async { completion(nil) }
+            }
+        })
+        
+        return thumbTaskHandle
     }
 }
 

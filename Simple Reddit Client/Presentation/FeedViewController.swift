@@ -87,7 +87,7 @@ class FeedViewController: UIViewController {
         cell?.viewModel = viewModel
         
         cell?.thumbnailPressed = { [weak self] in
-            guard let vm = self?.dataSource.itemIdentifier(for: ip), let imageURL = vm.originalImage else { return }
+            guard let vm = self?.dataSource.itemIdentifier(for: ip), let imageURL = vm.originalContent else { return }
             UIApplication.shared.open(imageURL, options: [:], completionHandler: nil)
         }
         

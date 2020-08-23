@@ -8,9 +8,28 @@
 
 import Foundation
 
+struct TaskHandle {
+    private let task: URLSessionTask?
+    var taskProgress: Progress? {
+        task?.progress
+    }
+    
+    init(task: URLSessionTask?) {
+        self.task = task
+    }
+    
+    func resume() {
+        task?.resume()
+    }
+    
+    func cancel() {
+        task?.cancel()
+    }
+}
+
 protocol NetworkService {
-    func execute<Value: Decodable>(_ request: Request, completion: @escaping (Result<Value, NetworkServiceError>) -> Void)
-        func imageTask(for url: URL, completion: @escaping (Result<URL, NetworkServiceError>) -> Void) -> URLSessionDownloadTask
+    @discardableResult func execute<Value: Decodable>(_ request: Request, completion: @escaping (Result<Value, NetworkServiceError>) -> Void) -> TaskHandle
+    func imageTask(for url: URL, completion: @escaping (Result<URL, NetworkServiceError>) -> Void) -> TaskHandle
 }
 
 enum NetworkServiceError: Error {
@@ -43,6 +62,15 @@ class NetworkServiceImpl: NetworkService {
     
     init(authorizationService: AutorizationService) {
         self.authorizationService = authorizationService
+        
+        authorizationService.authorize { [weak self] (result) in
+            switch result {
+            case .success(let session):
+                self?.session = session
+            case .failure:
+                print(debugPrint("Authorization failed"))
+            }
+        }
     }
     
     
@@ -51,17 +79,17 @@ class NetworkServiceImpl: NetworkService {
             switch result {
             case .success(let session):
                 self?.session = session
-                self?.execute(request, completion: completion)
+                _ = self?.execute(request, completion: completion)
             case .failure:
                 completion(.failure(.unauthorized))
             }
         }
     }
     
-    func execute<Value: Decodable>(_ request: Request, completion: @escaping (Result<Value, NetworkServiceError>) -> Void) {
+    func execute<Value: Decodable>(_ request: Request, completion: @escaping (Result<Value, NetworkServiceError>) -> Void) -> TaskHandle {
         guard let session = session else {
             retry(request: request, completion: completion)
-            return
+            return TaskHandle(task: nil)
         }
         
         let urlRequest = request.urlRequest
@@ -79,7 +107,7 @@ class NetworkServiceImpl: NetworkService {
                 completion(.failure(.other("Status - \(response.statusCode)")))
                 return
             }
-            guard let value = try! self?.decoder.decode(Value.self, from: data) else {
+            guard let value = try? self?.decoder.decode(Value.self, from: data) else {
                 completion(.failure(.decodingFailed))
                 return
             }
@@ -88,9 +116,11 @@ class NetworkServiceImpl: NetworkService {
         }
         
         task.resume()
+        
+        return TaskHandle(task: task)
     }
     
-    func imageTask(for url: URL, completion: @escaping (Result<URL, NetworkServiceError>) -> Void) -> URLSessionDownloadTask {
+    func imageTask(for url: URL, completion: @escaping (Result<URL, NetworkServiceError>) -> Void) -> TaskHandle {
         let task = URLSession.shared.downloadTask(with: url) { (localURL, response, error) in
             if let error = error { return completion(.failure(.other(error.localizedDescription))) }
             guard let localURL = localURL, let response = response as? HTTPURLResponse else {
@@ -104,6 +134,7 @@ class NetworkServiceImpl: NetworkService {
             
             completion(.success(localURL))
         }
-        return task
+        
+        return TaskHandle(task: task)
     }
 }

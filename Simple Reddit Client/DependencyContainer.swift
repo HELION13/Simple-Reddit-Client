@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import class UIKit.UIStoryboard
 
 class DependencyContainer {
     func resolve() -> AutorizationService {
@@ -19,5 +20,12 @@ class DependencyContainer {
     
     func resolve() -> FeedViewModel {
         return FeedViewModelImpl(networkService: resolve())
+    }
+    
+    func resolve() -> FeedViewController {
+        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "Feed") as! FeedViewController
+        controller.viewModel = resolve()
+        
+        return controller
     }
 }

@@ -14,7 +14,7 @@ enum FeedSection {
 
 class FeedViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    var viewModel: FeedViewModel! = DependencyContainer().resolve()
+    var viewModel: FeedViewModel!
     private var dataSource: UITableViewDiffableDataSource<FeedSection, PostViewModel>!
     private var tableOffset: Int?
     private var lastItemID: String?
@@ -22,27 +22,10 @@ class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupRestoration()
         setupRefreshControll()
         setupDatasource()
-        restoreStateIfNeeded()
-    }
-    
-    private func restoreStateIfNeeded() {
-        tableOffset = UserDefaults.standard.integer(forKey: Constants.Keys.tableOffset)
-        let lastItem = UserDefaults.standard.value(forKey: Constants.Keys.lastItem) as? String
         
-        viewModel.handle(action: .resotorePostsBefore(lastItem))
-    }
-    
-    private func setupRestoration() {
-        NotificationCenter.default.addObserver(self, selector: #selector(saveState), name: UIApplication.willResignActiveNotification, object: nil)
-    }
-    
-    @objc private func saveState() {
-        let resultIndex = (tableView.indexPathsForVisibleRows?.max()?.row ?? 0) % (Constants.pageSize * 2)
-        UserDefaults.standard.setValue(resultIndex, forKey: Constants.Keys.tableOffset)
-        UserDefaults.standard.setValue(lastItemID, forKey: Constants.Keys.lastItem)
+        viewModel.handle(action: .resotorePostsBefore(lastItemID))
     }
     
     private func setupRefreshControll() {
@@ -77,7 +60,7 @@ class FeedViewController: UIViewController {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 
-                self.tableView.scrollToRow(at: IndexPath(row: offset, section: 0), at: .bottom, animated: false)
+                self.tableView.scrollToRow(at: IndexPath(row: offset, section: 0), at: .top, animated: false)
                 self.tableOffset = nil
             }
         }
@@ -110,12 +93,20 @@ class FeedViewController: UIViewController {
         viewModel.handle(action: .refresh)
     }
     
-    override func encodeRestorableState(with coder: NSCoder) {
-        super.encodeRestorableState(with: coder)
+    override func updateUserActivityState(_ activity: NSUserActivity) {
+        super.updateUserActivityState(activity)
+        
+        let resultIndex = (tableView.indexPathsForVisibleRows?.min()?.row ?? 0) % Constants.pageSize
+        let info: [AnyHashable: Any] = [Constants.Keys.tableOffset: resultIndex,
+                                        Constants.Keys.lastItem: lastItemID as Any]
+        activity.addUserInfoEntries(from: info)
     }
     
-    override func decodeRestorableState(with coder: NSCoder) {
-        super.decodeRestorableState(with: coder)
+    override func restoreUserActivityState(_ activity: NSUserActivity) {
+        super.restoreUserActivityState(activity)
+        
+        tableOffset = activity.userInfo?[Constants.Keys.tableOffset] as? Int
+        lastItemID = activity.userInfo?[Constants.Keys.lastItem] as? String
     }
 }
 

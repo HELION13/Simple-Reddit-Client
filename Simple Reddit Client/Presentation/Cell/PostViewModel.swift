@@ -24,7 +24,7 @@ class PostViewModel {
     private let networkService: NetworkService
     
     init(model: Post, dateString: String, networkService: NetworkService) {
-        id = model.id
+        id = model.name
         title = model.title
         author = model.author
         numComments = model.numComments

@@ -22,5 +22,8 @@ enum Constants {
     enum Keys {
         static let tableOffset = "tableOffset"
         static let lastItem = "lastItem"
+        static var activityKey: String {
+            (Bundle.main.object(forInfoDictionaryKey: "NSUserActivityTypes") as? [String])?.first ?? ""
+        }
     }
 }

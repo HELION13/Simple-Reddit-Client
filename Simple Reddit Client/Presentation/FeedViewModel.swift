@@ -59,7 +59,7 @@ class FeedViewModelImpl: FeedViewModel {
     private func restoreContent() {
         guard !loading else { return }
         
-        let request = Request.top(.init(after: nil, before: lastItemIdentifier, limit: Constants.pageSize * 2, count: nil))
+        let request = Request.top(.init(after: nil, before: lastItemIdentifier, limit: Constants.pageSize, count: nil))
         loading = true
         stateUpdated?(.init(posts: postVms, loading: true, errorMessage: nil))
         performRequest(request, reset: true)

@@ -20,7 +20,7 @@ enum Constants {
     static let pageSize: Int = 25
     
     enum Keys {
-        static let tableOffset = "tableOffset"
+        static let visibleItem = "visibleItem"
         static let lastItem = "lastItem"
         static var activityKey: String {
             (Bundle.main.object(forInfoDictionaryKey: "NSUserActivityTypes") as? [String])?.first ?? ""

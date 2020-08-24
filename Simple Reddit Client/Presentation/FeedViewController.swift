@@ -16,7 +16,7 @@ class FeedViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var viewModel: FeedViewModel!
     private var dataSource: UITableViewDiffableDataSource<FeedSection, PostViewModel>!
-    private var tableOffset: Int?
+    private var visibleItemID: String?
     private var lastItemID: String?
 
     override func viewDidLoad() {
@@ -55,13 +55,13 @@ class FeedViewController: UIViewController {
             
             self.dataSource.apply(snap)
             
-            guard let offset = self.tableOffset, offset < state.posts.count else { return }
+            guard let visibleItemID = self.visibleItemID, let vm = state.posts.first(where: { $0.id == visibleItemID }) else { return }
             
             DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
+                guard let self = self, let index = self.dataSource.indexPath(for: vm) else { return }
                 
-                self.tableView.scrollToRow(at: IndexPath(row: offset, section: 0), at: .top, animated: false)
-                self.tableOffset = nil
+                self.tableView.scrollToRow(at: index, at: .top, animated: false)
+                self.visibleItemID = nil
             }
         }
         
@@ -96,8 +96,8 @@ class FeedViewController: UIViewController {
     override func updateUserActivityState(_ activity: NSUserActivity) {
         super.updateUserActivityState(activity)
         
-        let resultIndex = (tableView.indexPathsForVisibleRows?.min()?.row ?? 0) % Constants.pageSize
-        let info: [AnyHashable: Any] = [Constants.Keys.tableOffset: resultIndex,
+        guard let resultIndex = tableView.indexPathsForVisibleRows?.min(), let vm = dataSource.itemIdentifier(for: resultIndex) else { return }
+        let info: [AnyHashable: Any] = [Constants.Keys.visibleItem: vm.id,
                                         Constants.Keys.lastItem: lastItemID as Any]
         activity.addUserInfoEntries(from: info)
     }
@@ -105,7 +105,7 @@ class FeedViewController: UIViewController {
     override func restoreUserActivityState(_ activity: NSUserActivity) {
         super.restoreUserActivityState(activity)
         
-        tableOffset = activity.userInfo?[Constants.Keys.tableOffset] as? Int
+        visibleItemID = activity.userInfo?[Constants.Keys.visibleItem] as? String
         lastItemID = activity.userInfo?[Constants.Keys.lastItem] as? String
     }
 }

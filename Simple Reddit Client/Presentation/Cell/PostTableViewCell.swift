@@ -66,7 +66,7 @@ class PostTableViewCell: UITableViewCell {
     var sharePressed: ((UIImage, URL) -> Void)?
     
     private func imageValid() -> Bool {
-        guard let originalURL = viewModel.originalContent, originalURL.pathExtension == "jpg" || originalURL.pathExtension == "png" else { return false }
+        guard let originalURL = viewModel.originalContent, originalURL.pathExtension == "jpg" || originalURL.pathExtension == "png", viewModel.thumbnailAspect != nil else { return false }
         return true
     }
     

@@ -55,7 +55,7 @@ extension Post: Decodable {
         if let urlString = try dataContainer.decodeIfPresent(String.self, forKey: .thumbnail) {
             switch urlString {
             case "self":
-                thumbnail = Constants.selfThumbURL
+                thumbnail = nil
             case "default":
                 thumbnail = Constants.defaultThumbURL
             case "nsfw":

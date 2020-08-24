@@ -110,13 +110,13 @@ class FeedViewController: UIViewController {
         viewModel.handle(action: .refresh)
     }
     
-    override func updateUserActivityState(_ activity: NSUserActivity) {
-        super.updateUserActivityState(activity)
-        
-        guard let resultIndex = tableView.indexPathsForVisibleRows?.min(), let vm = dataSource.itemIdentifier(for: resultIndex) else { return }
-        let info: [AnyHashable: Any] = [Constants.Keys.visibleItem: vm.id,
-                                        Constants.Keys.lastItem: lastItemID as Any]
-        activity.addUserInfoEntries(from: info)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        let index = tableView.indexPathsForVisibleRows?.min()
+        guard let ip = index else { return }
+
+        tableView.scrollToRow(at: ip, at: .top, animated: true)
+
+        super.viewWillTransition(to: size, with: coordinator)
     }
     
     override func restoreUserActivityState(_ activity: NSUserActivity) {

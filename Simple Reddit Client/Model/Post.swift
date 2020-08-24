@@ -59,7 +59,7 @@ extension Post: Decodable {
             case "default":
                 thumbnail = Constants.defaultThumbURL
             case "nsfw":
-                thumbnail = Constants.nsfwThumbURL
+                thumbnail = nil
             case "image":
                 thumbnail = nil
             default:

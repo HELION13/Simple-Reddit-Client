@@ -16,6 +16,15 @@ enum AuthrizationServiceError: Error {
     case authorizationFailed
     case decodingFailed
     case other(String)
+    
+    var localizedDescription: String {
+        switch self {
+        case .authorizationFailed, .decodingFailed:
+            return "Application failed to authorize"
+        case .other(let message):
+            return message
+        }
+    }
 }
 
 struct AuthorizationServiceImpl: AutorizationService {
@@ -46,6 +55,7 @@ struct AuthorizationServiceImpl: AutorizationService {
             
             let config = URLSessionConfiguration.default
             config.httpAdditionalHeaders = ["Authorization": "Bearer \(tokenResponse.accessToken)"]
+            config.timeoutIntervalForRequest = 15.0
             let session = URLSession(configuration: config)
             
             completion(.success(session))

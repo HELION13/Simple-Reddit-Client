@@ -40,9 +40,9 @@ enum NetworkServiceError: Error {
     var localizedDescription: String {
         switch self {
         case .unauthorized:
-            return "Unauthorized"
+            return "Application failed to authorize"
         case .decodingFailed:
-            return "Response decoding failed"
+            return "Hmm. Something is missing."
         case .other(let message):
             return message
         }

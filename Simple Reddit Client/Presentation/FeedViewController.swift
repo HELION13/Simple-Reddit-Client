@@ -43,30 +43,47 @@ class FeedViewController: UIViewController {
         viewModel.stateUpdated = { [weak self] (state) in
             guard let self = self else { return }
             
-            if state.loading != self.tableView.refreshControl?.isRefreshing ?? false {
-                state.loading ? self.tableView.refreshControl?.beginRefreshing() : self.tableView.refreshControl?.endRefreshing()
-            }
-            
-            self.lastItemID = state.posts.last?.id
-            
-            var snap = NSDiffableDataSourceSnapshot<FeedSection, PostViewModel>()
-            snap.appendSections([.all])
-            snap.appendItems(state.posts)
-            
-            self.dataSource.apply(snap)
-            
-            guard let visibleItemID = self.visibleItemID, let vm = state.posts.first(where: { $0.id == visibleItemID }) else { return }
-            
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self, let index = self.dataSource.indexPath(for: vm) else { return }
-                
-                self.tableView.scrollToRow(at: index, at: .top, animated: false)
-                self.visibleItemID = nil
-            }
+            self.updateFeed(with: state)
         }
         
         dataSource.defaultRowAnimation = .fade
         tableView.prefetchDataSource = self
+    }
+    
+    private func presentAlert(with message: String?) {
+        guard let message = message else { return }
+        
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func updateFeed(with state: FeedState) {
+        presentAlert(with: state.errorMessage)
+        
+        if state.loading != tableView.refreshControl?.isRefreshing ?? false {
+            state.loading ? tableView.refreshControl?.beginRefreshing() : tableView.refreshControl?.endRefreshing()
+        }
+        
+        lastItemID = state.posts.last?.id
+        
+        var snap = NSDiffableDataSourceSnapshot<FeedSection, PostViewModel>()
+        snap.appendSections([.all])
+        snap.appendItems(state.posts)
+        
+        dataSource.apply(snap)
+        
+        guard let visibleItemID = visibleItemID, let vm = state.posts.first(where: { $0.id == visibleItemID }) else { return }
+        
+        self.scrollToRow(with: vm)
+    }
+    
+    private func scrollToRow(with model: PostViewModel) {
+        guard let index = dataSource.indexPath(for: model) else { return }
+        
+        tableView.scrollToRow(at: index, at: .top, animated: false)
+        visibleItemID = nil
     }
     
     private func setupCell(for ip: IndexPath, with viewModel: PostViewModel) -> UITableViewCell? {
@@ -89,7 +106,7 @@ class FeedViewController: UIViewController {
         return cell
     }
     
-    @objc func refresh() {
+    @objc private func refresh() {
         viewModel.handle(action: .refresh)
     }
     

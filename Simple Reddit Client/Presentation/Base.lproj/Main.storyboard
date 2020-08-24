@@ -90,16 +90,16 @@
                                                                 <constraint firstAttribute="height" constant="21" id="2B7-B1-dMJ"/>
                                                             </constraints>
                                                         </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Ztr-zg-vTg">
+                                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Ztr-zg-vTg">
                                                             <rect key="frame" x="0.0" y="48" width="374" height="100"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Postal union officials: 10 mail-sorting machines removed in Michigan" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u5k-GP-bzS">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="327.5" height="41"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Postal union officials" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u5k-GP-bzS">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="271" height="20.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OfA-CA-Taf">
-                                                                    <rect key="frame" x="330.5" y="0.0" width="43.5" height="100"/>
+                                                                    <rect key="frame" x="274" y="0.0" width="100" height="100"/>
                                                                     <subviews>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="m1T-9J-FUZ">
                                                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -131,6 +131,7 @@
                                                                         <constraint firstItem="ljV-25-Bsn" firstAttribute="leading" secondItem="m1T-9J-FUZ" secondAttribute="leading" id="j4G-1Y-Eop"/>
                                                                         <constraint firstItem="m1T-9J-FUZ" firstAttribute="top" secondItem="OfA-CA-Taf" secondAttribute="top" id="rbZ-ob-vZ6"/>
                                                                         <constraint firstItem="m1T-9J-FUZ" firstAttribute="leading" secondItem="OfA-CA-Taf" secondAttribute="leading" id="uN7-tE-X1B"/>
+                                                                        <constraint firstAttribute="width" constant="100" id="ys3-ls-Q5k"/>
                                                                         <constraint firstItem="ljV-25-Bsn" firstAttribute="bottom" secondItem="m1T-9J-FUZ" secondAttribute="bottom" id="zn8-QY-PRj"/>
                                                                     </constraints>
                                                                 </view>
